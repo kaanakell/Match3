@@ -159,6 +159,8 @@ MonoBehaviour:
   - {fileID: 8424315981701083, guid: e239d2de50c74d54a80785f8a1ca8395, type: 3}
   - {fileID: 4921672724304043222, guid: f8324404194508b489b706b14a9295e1, type: 3}
   boardManagerGameObject: {fileID: 482867543}
+  foodsToDestroy: []
+  foodParent: {fileID: 1868475918}
 --- !u!4 &482867545
 Transform:
   m_ObjectHideFlags: 0
@@ -395,7 +397,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &622406190
+--- !u!1 &647374113
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -403,8 +405,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 622406192}
-  - component: {fileID: 622406191}
+  - component: {fileID: 647374115}
+  - component: {fileID: 647374114}
   m_Layer: 0
   m_Name: MatchManager
   m_TagString: Untagged
@@ -412,25 +414,60 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &622406191
+--- !u!114 &647374114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 622406190}
+  m_GameObject: {fileID: 647374113}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4ebb9703aa510343a8a9f1a2e1edf2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &622406192
+  connectedFoods: []
+  direction: 0
+  selectedFood: {fileID: 0}
+  isProcessingMove: 0
+--- !u!4 &647374115
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 622406190}
+  m_GameObject: {fileID: 647374113}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.21745127, y: -0.08200964, z: -9.993143}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1868475918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1868475919}
+  m_Layer: 0
+  m_Name: Foods
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1868475919
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868475918}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -446,4 +483,5 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 482867545}
-  - {fileID: 622406192}
+  - {fileID: 647374115}
+  - {fileID: 1868475919}
