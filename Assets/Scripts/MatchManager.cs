@@ -12,20 +12,27 @@ public class MatchManager : MonoBehaviour
     [SerializeField] private Foods selectedFood;
 
     public bool isProcessingMove;
+ 
+    [SerializeField] List<Foods> foodsToRemove = new();
     void Start()
     {
         boardManager = GameObject.Find("BoardManager").GetComponent<BoardManager>();
     }
 
-    public bool CheckBoard(bool takeAction)
+    public bool CheckBoard()
     {
+        if(GameManager.Instance.isGameEnded)
+        {
+            return false;
+        }
         Debug.Log("Checking");
         bool hasMatched = false;
-        List<Foods> foodsToRemove = new();
+
+        foodsToRemove.Clear();
 
         foreach (Node nodeFood in boardManager.boardManager)
         {
-            if(nodeFood.food != null)
+            if (nodeFood.food != null)
             {
                 nodeFood.food.GetComponent<Foods>().isMatched = false;
             }
@@ -65,23 +72,24 @@ public class MatchManager : MonoBehaviour
             }
         }
 
-        if (takeAction)
-        {
-
-            foreach(Foods foodToRemove in foodsToRemove)
-            {
-                foodToRemove.isMatched = false;
-            }
-
-            boardManager.RemoveAndRefill(foodsToRemove);
-
-            //check for a brand new match
-            if (CheckBoard(false))
-            {
-                CheckBoard(true);
-            }
-        }
         return hasMatched;
+    }
+
+    public IEnumerator ProcessTurnOnMatchedBoard(bool substractMoves)
+    {
+        foreach (Foods foodToRemove in foodsToRemove)
+        {
+            foodToRemove.isMatched = false;
+        }
+
+        boardManager.RemoveAndRefill(foodsToRemove);
+        GameManager.Instance.ProcessTurn(foodsToRemove.Count, substractMoves);
+        yield return new WaitForSeconds(.4f);
+
+        if(CheckBoard())
+        {
+            StartCoroutine(ProcessTurnOnMatchedBoard(false));
+        }
     }
 
     private MatchManager SuperMatch(MatchManager matchedResults)
@@ -299,6 +307,7 @@ public class MatchManager : MonoBehaviour
 
         StartCoroutine(ProcessMatches(currentFood, targetFood));
     }
+
     //do swap
     private void DoSwap(Foods currentFood, Foods targetFood)
     {
@@ -325,9 +334,12 @@ public class MatchManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.2f);
 
-        bool hasMatched = CheckBoard(true);
-
-        if (!hasMatched)
+        if (CheckBoard())
+        {
+            //Start a coroutine that is going to process our matches in our turn
+            StartCoroutine(ProcessTurnOnMatchedBoard(true));
+        }
+        else
         {
             DoSwap(currentFood, targetFood);
         }

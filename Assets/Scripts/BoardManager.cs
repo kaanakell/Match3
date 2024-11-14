@@ -86,7 +86,7 @@ public class BoardManager : MonoBehaviour
                 foodsToDestroy.Add(food);
             }
         }
-        if (matchManager.CheckBoard(false))
+        if (matchManager.CheckBoard())
         {
             Debug.Log("We have matches let's re-create the board");
             InitializeBoard();
