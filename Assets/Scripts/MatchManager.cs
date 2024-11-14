@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MatchManager : MonoBehaviour
 {
+    public static MatchManager Instance; // Singleton instance
     public List<Foods> connectedFoods;
     public MatchDirection direction;
 
@@ -14,9 +16,52 @@ public class MatchManager : MonoBehaviour
     public bool isProcessingMove;
  
     [SerializeField] List<Foods> foodsToRemove = new();
-    void Start()
+
+    private void Awake()
     {
-        boardManager = GameObject.Find("BoardManager").GetComponent<BoardManager>();
+        // Ensure there's only one instance of MatchManager
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Make this object persistent
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate instances
+        }
+    }
+    private void Start()
+    {
+        // Initialize references
+        InitializeReferences();
+    }
+
+    // Called whenever a new scene loads
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Refresh references when a new scene loads
+        InitializeReferences();
+    }
+
+    private void InitializeReferences()
+    {
+        // Find and set reference to BoardManager in the new scene
+        boardManager = GameObject.Find("BoardManager")?.GetComponent<BoardManager>();
+
+        if (boardManager == null)
+        {
+            Debug.LogError("BoardManager not found in the scene.");
+        }
     }
 
     public bool CheckBoard()
@@ -342,6 +387,7 @@ public class MatchManager : MonoBehaviour
         else
         {
             DoSwap(currentFood, targetFood);
+            GameManager.Instance.ProcessTurn(0, true);
         }
 
         isProcessingMove = false;
