@@ -21,6 +21,7 @@ public class BoardManager : MonoBehaviour
     public GameObject foodParent;
 
     private MatchManager matchManager;
+    private SpinManager spinManager;
 
 
     //layoutAray
@@ -37,7 +38,12 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();
+        spinManager = GameObject.Find("SpinManager").GetComponent<SpinManager>();
+
         InitializeBoard();
+        spinManager.InitializeColumns();
+        spinManager.Spin();
+
     }
 
     private void Update()
