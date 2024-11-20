@@ -4,79 +4,103 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance; //static reference
+    public static GameManager Instance; // Static reference
 
-    public GameObject backgroundPanel; //grey background
+    public GameObject backgroundPanel; // Grey background
     public GameObject victoryPanel;
     public GameObject losePanel;
 
-    public int goal; //the amount of points you need to get to to win
-    public int moves; //the number of turns you can take
-    public int points; //the current points you have earned
+    public int goal; // The amount of points you need to get to win
+    public int moves; // The number of turns you can take
+    public int points; // The current points you have earned
 
     public bool isGameEnded;
 
     public TextMeshPro pointsTxt;
     public TextMeshPro movesTxt;
     public TextMeshPro goalTxt;
-
+    public SpinButton spinButton;
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        // Ensure panels are hidden at the start
+        ResetPanels();
     }
 
-    public void Initialize (int _moves, int _goal)
+    public void Initialize(int _moves, int _goal)
     {
         moves = _moves;
         goal = _goal;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        // Update the UI elements
         pointsTxt.text = "Points: " + points.ToString();
         movesTxt.text = "Moves: " + moves.ToString();
         goalTxt.text = "Goal: " + goal.ToString();
-
     }
 
-    public void ProcessTurn(int pointsToGain, bool substractMoves)
+    public void ProcessTurn(int pointsToGain, bool subtractMoves)
     {
         points += pointsToGain;
-        if(substractMoves)
+        if (subtractMoves)
         {
             moves--;
         }
 
-        if(points >= goal)
+        if (points >= goal)
         {
-            //you've won the game
-            isGameEnded = true;
-            //Display a victory screen
-            backgroundPanel.SetActive(true);
+            // You've won the game
+            EndGame(true);
+            return;
+        }
+
+        if (moves == 0)
+        {
+            // Lose the game
+            EndGame(false);
+            return;
+        }
+    }
+
+    private void EndGame(bool won)
+    {
+        isGameEnded = true;
+
+        // Display the appropriate end game panel
+        if (won)
+        {
             victoryPanel.SetActive(true);
-            return;
         }
-        if(moves == 0)
+        else
         {
-            //lose the game
-            isGameEnded = true;
-            backgroundPanel.SetActive(true);
             losePanel.SetActive(true);
-            return;
         }
     }
 
-    //attached to a button to change scene when winning
-    public void WinGame()
+    private void ResetPanels()
     {
-        SceneManager.LoadScene(0);
+        // Hide all panels at the start of the game
+        victoryPanel.SetActive(false);
+        losePanel.SetActive(false);
     }
 
-    //attached to a button to change scene when losing
-    public void LoseGame()
+    // Attached to a button to change scene when winning or losing
+    public void RestartGame()
     {
-        SceneManager.LoadScene(0);
+        isGameEnded = false; // Reset game state
+
+        // Reload the scene to reset all game elements
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

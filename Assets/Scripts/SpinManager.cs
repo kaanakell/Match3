@@ -11,7 +11,7 @@ public class SpinManager : MonoBehaviour
 
     private List<List<GameObject>> columns = new List<List<GameObject>>(); // Store all columns
     private Dictionary<GameObject, Vector3> initialPositions = new Dictionary<GameObject, Vector3>(); // Store original positions
-    private bool isStopping = false; // Whether the columns should stop
+    public bool isStopping = false; // Whether the columns should stop
     private BoardManager boardManager;
 
     private void Start()
@@ -28,6 +28,9 @@ public class SpinManager : MonoBehaviour
 
     public void InitializeColumns()
     {
+        columns.Clear(); // Clear existing columns
+        initialPositions.Clear(); // Clear initial positions
+
         // Initialize and populate the list of columns
         for (int x = 0; x < boardManager.boardWidth; x++)
         {
@@ -44,8 +47,14 @@ public class SpinManager : MonoBehaviour
 
     public void Spin()
     {
+        // Refresh the board before spinning
+        boardManager.InitializeBoard();
+        InitializeColumns();
+
+        isStopping = false; // Reset the stopping state
         StartCoroutine(SpinColumns());
     }
+
 
     private IEnumerator SpinColumns()
     {

@@ -18,15 +18,8 @@ public class ButtonRaycastHandler : MonoBehaviour
                 GameButton button = hit.collider.GetComponent<GameButton>();
                 if (button != null)
                 {
-                    // Call the appropriate GameManager method based on button type
-                    if (button.buttonType == GameButton.ButtonType.Win)
-                    {
-                        GameManager.Instance.WinGame();
-                    }
-                    else if (button.buttonType == GameButton.ButtonType.Lose)
-                    {
-                        GameManager.Instance.LoseGame();
-                    }
+                    // Call RestartGame on the GameManager
+                    GameManager.Instance.RestartGame();
                 }
             }
         }

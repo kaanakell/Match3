@@ -7,14 +7,11 @@ public class GameButton : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // Check button type and call the appropriate method in GameManager
-        if (buttonType == ButtonType.Win)
+        // Check button type and handle accordingly
+        if (buttonType == ButtonType.Win || buttonType == ButtonType.Lose)
         {
-            GameManager.Instance.WinGame();
-        }
-        else if (buttonType == ButtonType.Lose)
-        {
-            GameManager.Instance.LoseGame();
+            GameManager.Instance.RestartGame();
         }
     }
 }
+

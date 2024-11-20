@@ -22,7 +22,8 @@ public class BoardManager : MonoBehaviour
 
     private MatchManager matchManager;
     private SpinManager spinManager;
-
+    private SpinButton spinButton;
+    private bool boardInteracted = false;
 
     //layoutAray
     //public ArrayLayout arrayLayout;
@@ -39,6 +40,13 @@ public class BoardManager : MonoBehaviour
     {
         matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();
         spinManager = GameObject.Find("SpinManager").GetComponent<SpinManager>();
+        spinButton = GameObject.Find("SpinButton").GetComponent<SpinButton>();
+
+        if (matchManager == null)
+            Debug.LogError("MatchManager not found in the scene.");
+
+        if (spinButton == null)
+            Debug.LogError("SpinButton not found in the scene.");
 
         InitializeBoard();
         spinManager.InitializeColumns();
@@ -61,7 +69,14 @@ public class BoardManager : MonoBehaviour
                 }
 
                 Foods food = hit.collider.gameObject.GetComponent<Foods>();
-                Debug.Log("I have a clicked a food it is: " + food.gameObject);
+                Debug.Log("I have clicked a food: " + food.gameObject);
+
+                // Disable the Spin button when the board is interacted with
+                if (!boardInteracted)
+                {
+                    spinButton.DeactivateButton();
+                    boardInteracted = true;
+                }
 
                 matchManager.SelectFood(food);
             }
@@ -69,7 +84,7 @@ public class BoardManager : MonoBehaviour
     }
 
 
-    void InitializeBoard()
+    public void InitializeBoard()
     {
         DestroyFoods();
         boardManager = new Node[boardWidth, boardHeight];
@@ -179,7 +194,7 @@ public class BoardManager : MonoBehaviour
     {
         int index = FindIndexOfLowestNull(x);
         int locationToMoveTo = 7 - index;
-        Debug.Log("About to spawn a food, ideally i'd like to put it in the index of: "+ index);
+        Debug.Log("About to spawn a food, ideally i'd like to put it in the index of: " + index);
         //get a random food
         int randomIndex = Random.Range(0, foodPrefabs.Length);
         GameObject newFood = Instantiate(foodPrefabs[randomIndex], new Vector2(x - spacingX, boardHeight - spacingY), Quaternion.identity);
@@ -196,9 +211,9 @@ public class BoardManager : MonoBehaviour
     private int FindIndexOfLowestNull(int x)
     {
         int lowestNull = 99;
-        for(int y = 6; y >= 0; y--)
+        for (int y = 6; y >= 0; y--)
         {
-            if(boardManager[x, y].food == null)
+            if (boardManager[x, y].food == null)
             {
                 lowestNull = y;
             }
