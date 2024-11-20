@@ -530,6 +530,54 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &399689891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 399689893}
+  - component: {fileID: 399689892}
+  m_Layer: 0
+  m_Name: SpinManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &399689892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399689891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a22ddfd66a70c14bbfa45e52328c03a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinSpeed: 3
+  decelerationDuration: 2
+  startPosition: 4
+  resetThreshold: -3
+--- !u!4 &399689893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399689891}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &457810163
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,6 +832,8 @@ MonoBehaviour:
   - {fileID: 1941014878249103306, guid: 42d21691f8d3ffa4d9014471f984760e, type: 3}
   - {fileID: 8424315981701083, guid: e239d2de50c74d54a80785f8a1ca8395, type: 3}
   - {fileID: 4921672724304043222, guid: f8324404194508b489b706b14a9295e1, type: 3}
+  - {fileID: 1204700298130700971, guid: 91a3dfc32557e304998d0fa761af8890, type: 3}
+  - {fileID: 1640669132113314351, guid: c14a02bbf32a9fc4a8f1ed4c7f05630f, type: 3}
   boardManagerGameObject: {fileID: 482867543}
   foodsToDestroy: []
   foodParent: {fileID: 1868475918}
@@ -2601,55 +2651,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 8
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &1643190361
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1643190363}
-  - component: {fileID: 1643190362}
-  m_Layer: 0
-  m_Name: SpinManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1643190362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643190361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a22ddfd66a70c14bbfa45e52328c03a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spinSpeed: 4
-  decelerationDuration: 2
-  resetThreshold: -4
-  startPosition: 4
-  startDelay: 0.2
---- !u!4 &1643190363
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643190361}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1678388320
 GameObject:
   m_ObjectHideFlags: 0
@@ -3794,7 +3795,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 722872346}
   - {fileID: 482867545}
-  - {fileID: 1643190363}
+  - {fileID: 399689893}
   - {fileID: 1993393061}
   - {fileID: 789513282}
   - {fileID: 1868475919}

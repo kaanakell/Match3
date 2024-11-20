@@ -61,5 +61,7 @@ public enum FoodType
     Cherry,
     Peach,
     Honey,
-    WaterMelon
+    WaterMelon,
+    Avocado,
+    Jam
 }
