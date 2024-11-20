@@ -4,15 +4,15 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance; // Static reference
+    public static GameManager Instance; //static reference
 
-    public GameObject backgroundPanel; // Grey background
+    public GameObject backgroundPanel; //grey background
     public GameObject victoryPanel;
     public GameObject losePanel;
 
-    public int goal; // The amount of points you need to get to win
-    public int moves; // The number of turns you can take
-    public int points; // The current points you have earned
+    public int goal; //the amount of points you need to get to to win
+    public int moves; //the number of turns you can take
+    public int points; //the current points you have earned
 
     public bool isGameEnded;
 
@@ -23,17 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        // Ensure panels are hidden at the start
-        ResetPanels();
+        Instance = this;
     }
 
     public void Initialize(int _moves, int _goal)
@@ -42,65 +32,66 @@ public class GameManager : MonoBehaviour
         goal = _goal;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        // Update the UI elements
         pointsTxt.text = "Points: " + points.ToString();
         movesTxt.text = "Moves: " + moves.ToString();
         goalTxt.text = "Goal: " + goal.ToString();
     }
 
-    public void ProcessTurn(int pointsToGain, bool subtractMoves)
+    public void ProcessTurn(int pointsToGain, bool substractMoves)
     {
         points += pointsToGain;
-        if (subtractMoves)
+        if (substractMoves)
         {
             moves--;
         }
 
         if (points >= goal)
         {
-            // You've won the game
-            EndGame(true);
+            //you've won the game
+            isGameEnded = true;
+            //Display a victory screen
+            backgroundPanel.SetActive(true);
+            victoryPanel.SetActive(true);
             return;
         }
-
         if (moves == 0)
         {
-            // Lose the game
-            EndGame(false);
+            //lose the game
+            isGameEnded = true;
+            backgroundPanel.SetActive(true);
+            losePanel.SetActive(true);
             return;
         }
     }
 
-    private void EndGame(bool won)
-    {
-        isGameEnded = true;
-
-        // Display the appropriate end game panel
-        if (won)
-        {
-            victoryPanel.SetActive(true);
-        }
-        else
-        {
-            losePanel.SetActive(true);
-        }
-    }
-
-    private void ResetPanels()
-    {
-        // Hide all panels at the start of the game
-        victoryPanel.SetActive(false);
-        losePanel.SetActive(false);
-    }
-
-    // Attached to a button to change scene when winning or losing
+    // Call this method to restart or reset the game
     public void RestartGame()
     {
-        isGameEnded = false; // Reset game state
+        // Remove all match objects from the scene
+        RemoveMatchObjects();
 
-        // Reload the scene to reset all game elements
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Reset any other game-related logic here, e.g., score, moves, etc.
+        points = 0;
+        moves = 5; // Or whatever the initial number of moves should be
+        victoryPanel.SetActive(false); // Hide the victory panel
+        losePanel.SetActive(false); // Hide the lose panel
+
+        // Restart the scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Remove all match objects in the scene
+    private void RemoveMatchObjects()
+    {
+        // Assuming your match objects are tagged with "MatchObject"
+        GameObject[] matchObjects = GameObject.FindGameObjectsWithTag("MatchObject");
+
+        foreach (GameObject matchObject in matchObjects)
+        {
+            Destroy(matchObject); // Destroy the match object
+        }
     }
 }
