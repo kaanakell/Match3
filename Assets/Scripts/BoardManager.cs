@@ -33,15 +33,15 @@ public class BoardManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();
+        spinManager = GameObject.Find("SpinManager").GetComponent<SpinManager>();
+        spinButton = GameObject.Find("SpinButton").GetComponent<SpinButton>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        matchManager = GameObject.Find("MatchManager").GetComponent<MatchManager>();
-        spinManager = GameObject.Find("SpinManager").GetComponent<SpinManager>();
-        spinButton = GameObject.Find("SpinButton").GetComponent<SpinButton>();
-
         if (matchManager == null)
             Debug.LogError("MatchManager not found in the scene.");
 
@@ -96,7 +96,7 @@ public class BoardManager : MonoBehaviour
         {
             for (int x = 0; x < boardWidth; x++)
             {
-                Vector2 position = new Vector2(x - spacingX, y - spacingY);
+                Vector3 position = new Vector3(x - spacingX, y - spacingY, -1);
 
                 int randomIndex = Random.Range(0, foodPrefabs.Length);
 

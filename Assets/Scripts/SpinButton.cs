@@ -8,9 +8,13 @@ public class SpinButton : MonoBehaviour
 
     private Collider2D buttonCollider;  // To control button interaction
 
-    private void Start()
+    void Awake()
     {
         spinManager = GameObject.Find("SpinManager").GetComponent<SpinManager>();
+    }
+
+    private void Start()
+    {
         buttonCollider = GetComponent<Collider2D>();
 
         if (spinManager == null)

@@ -14,11 +14,14 @@ public class SpinManager : MonoBehaviour
     public bool isStopping = false; // Whether the columns should stop
     private BoardManager boardManager;
 
-    private void Start()
+    void Awake()
     {
         // Find the BoardManager to access the board configuration
         boardManager = GameObject.Find("BoardManager").GetComponent<BoardManager>();
+    }
 
+    private void Start()
+    {
         if (boardManager == null)
         {
             Debug.LogError("BoardManager not found. Ensure it exists in the scene.");
@@ -69,7 +72,6 @@ public class SpinManager : MonoBehaviour
     private IEnumerator SpinColumn(List<GameObject> column)
     {
         float columnSpinSpeed = spinSpeed; // Initial spin speed
-        bool columnStopped = false;
 
         // Spin normally until stopping phase starts
         while (!isStopping)
